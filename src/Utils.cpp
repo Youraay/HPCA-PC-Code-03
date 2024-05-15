@@ -16,13 +16,11 @@ namespace Utils {
 void MatVecMul(const std::vector<std::vector<float>> &matrix,
                const std::vector<float> &vector, std::vector<float> &result) {
   // checks if all conditions are meet for vactor matrix multiplication
-  if (matrix.size() == 0 || matrix[0].size() != vector.size() ||
-      result.size() != matrix.size()) {
+  if (matrix.size() > 0 || matrix[0].size() == vector.size() ||
+      result.size() == matrix.size()) {
 
-    for (long i = 0; i < matrix.size();
-         i++) { // Itterate thougt every Row of the Matrix
-      for (long j = 0; i < matrix[i].size();
-           i++) { // Itterate thougt every Column of the Matrix
+    for (long i = 0; i < matrix.size(); i++) { // Itterate thougt every Row of the Matrix
+      for (long j = 0; i < matrix[i].size(); i++) { // Itterate thougt every Column of the Matrix
         result[i] += vector[j] * matrix[i][j];
       }
     }

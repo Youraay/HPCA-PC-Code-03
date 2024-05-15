@@ -17,7 +17,11 @@ namespace Utils
                  const std::vector<float>& vector,
                  std::vector<float>& result)
   {
-    // TODO 2.2
+    for (long i = 0; i < matrix.size(); i++) {
+      for(long j = 0; i < matrix[i].size(); i++) {
+        result[i] += vector[j] * matrix[i][j];
+      }
+    }
   }
 
   void MatTransposeVecMul(const std::vector<std::vector<float>>& matrix, const std::vector<float>& vector,
@@ -41,7 +45,8 @@ namespace Utils
 
   void VecAdd(std::vector<float>& vectorA, std::vector<float>& vectorB, std::vector<float>& result)
   {
-    // TODO 2.2
+    if (vectorA.size() == vectorB.size() ) for (int i = 1; i < vectorA.size(); i++)   result[i] = vectorA[i] + vectorB[i];
+    
   }
 
   void VecSub(std::vector<float>& vectorA, std::vector<float>& vectorB, std::vector<float>& result)

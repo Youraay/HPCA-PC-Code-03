@@ -27,7 +27,15 @@ namespace Utils
   void MatTransposeVecMul(const std::vector<std::vector<float>>& matrix, const std::vector<float>& vector,
                           std::vector<float>& result)
   {
-    
+    if (matrix.size() > 0 && vector.size() > 0) {
+      for (size_t i = 0; i < matrix.size(); ++i) {
+        for (size_t j = 0; j < matrix[i].size(); ++j) {
+          result[i] += vector[i] * matrix[j][i]; // technically .at() would be better if different dimension -> else undefined behavior
+        }
+      }
+    } else {
+      throw std::runtime_error("Matrix or Vector is empty in MatTransposeVecMul()."); // or just return matrix
+    }
   }
 
   void Transpose(const std::vector<std::vector<float>>& matrix, std::vector<std::vector<float>>& result)
@@ -35,7 +43,7 @@ namespace Utils
     if (matrix.size() > 0) {
       for (size_t i = 0; i < matrix.size(); ++i) {
         for (size_t j = 0; j < matrix[i].size(); ++j) {
-          (result.at(i)).at(j) = matrix[j][i];
+          result[i][j] = matrix[j][i]; // technically .at() would be better if both matrices have different dimension -> else undefined behavior
         }
       }
     } else {

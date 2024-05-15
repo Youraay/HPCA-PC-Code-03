@@ -9,6 +9,8 @@ Emails: lakos@fias.uni-frankfurt.de; mithran@fias.uni-frankfurt.de
 
 #include "Utils.h"
 #include <stdexcept>
+#include <algorithm>
+#include <random>
 
 
 
@@ -148,10 +150,58 @@ void FillRandomlyPyTorch(std::vector<std::vector<float>> &matrix,
   }
 }
 
-void Shuffle(std::vector<std::vector<float>> &inputFeatures,
-             std::vector<size_t> &labels) {
-  // TODO 2.3
-}
+void Shuffle(std::vector<std::vector<float>>& inputFeatures, std::vector<size_t>& labels)
+  {
+    // Check if the sizes of inputFeatures and labels are the same
+    if(inputFeatures.size() != labels.size()){
+        throw std::invalid_argument("The sizes of inputFeatures and labels must be the same.");
+    }
+
+    /*
+    Create a random device, which generates a true random number.
+    Side Note: 
+    random_device creates a true random number, as it is a uniformly-distributed number generator.
+    This makes it non-deterministic i.e. it doesn't follow a pattern.
+    */
+    std::random_device rd;
+
+    // Seed the engine using rd, which will generate a sequence of pseudo-random numbers.
+    std::default_random_engine engine(rd());
+
+    // Create a vector of indices
+    std::vector<size_t> indices(inputFeatures.size());
+    // Fill indices vector with consecutive numbers, starting from 0.
+    std::iota(indices.begin(), indices.end(), 0);
+
+    // Shuffle the indices
+    std::shuffle(indices.begin(), indices.end(), engine);
+
+    // Create temporary vectors to hold the shuffled features and labels
+    std::vector<std::vector<float>> shuffledFeatures(inputFeatures.size());
+    std::vector<size_t> shuffledLabels(labels.size());
+
+    // Fill the temporary vectors with the shuffled data
+    for(size_t i = 0; i < indices.size(); ++i){
+        shuffledFeatures[i] = inputFeatures[indices[i]];
+        shuffledLabels[i] = labels[indices[i]];
+    }
+
+    // Swap the shuffled data with the original data
+    inputFeatures.swap(shuffledFeatures);
+    labels.swap(shuffledLabels);
+  }
+
+  void Zeros(std::vector<float>& vector)
+  {
+    std::fill(vector.begin(), vector.end(), 0.f);
+  }
+
+  void Zeros(std::vector<std::vector<float>>& matrix)
+  {
+    for (std::vector<float>& row: matrix) {
+      Zeros(row);
+    }
+  }
 
 void Zeros(std::vector<float> &vector) {
   std::fill(vector.begin(), vector.end(), 0.f);

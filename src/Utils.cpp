@@ -6,7 +6,9 @@ Authors: R.Lakos; A.Mithran
 Emails: lakos@fias.uni-frankfurt.de; mithran@fias.uni-frankfurt.de
 ==================================================
 */
+
 #include "Utils.h"
+#include <stdexcept>
 
 
 
@@ -29,16 +31,24 @@ void MatVecMul(const std::vector<std::vector<float>> &matrix,
   }
 }
 
-void MatTransposeVecMul(const std::vector<std::vector<float>> &matrix,
-                        const std::vector<float> &vector,
-                        std::vector<float> &result) {
-  // TODO 2.4
-}
+  void MatTransposeVecMul(const std::vector<std::vector<float>>& matrix, const std::vector<float>& vector,
+                          std::vector<float>& result)
+  {
 
-void Transpose(const std::vector<std::vector<float>> &matrix,
-               std::vector<std::vector<float>> &result) {
-  // TODO 2.4
-}
+  }
+
+  void Transpose(const std::vector<std::vector<float>>& matrix, std::vector<std::vector<float>>& result)
+  {
+    if (matrix.size() > 0) {
+      for (size_t i = 0; i < matrix.size(); ++i) {
+        for (size_t j = 0; j < matrix[i].size(); ++j) {
+          (result.at(i)).at(j) = matrix[j][i];
+        }
+      }
+    } else {
+      throw std::runtime_error("Matrix is empty in Transpose()."); // or just return matrix
+    }
+  }
 
 void VecAdd(std::vector<float> &vectorA, std::vector<float> &vectorB,
             std::vector<float> &result) {
@@ -94,11 +104,16 @@ void OuterProductAdd(const std::vector<float> &a, const std::vector<float> &b,
   }
 }
 
-void HadamardProduct(const std::vector<float> &vectorA,
-                     const std::vector<float> &vectorB,
-                     std::vector<float> &result) {
-  // TODO 2.4
-}
+  void HadamardProduct(const std::vector<float>& vectorA, const std::vector<float>& vectorB, std::vector<float>& result)
+  {
+    if (vectorA.size() == vectorB.size()) {
+      for (size_t i; i < vectorA.size(); ++i) { // vectorB has the same size per definition.
+        result[i] = vectorA[i] * vectorB[i];
+      }
+    } else {
+      throw std::runtime_error("Both vectors need to be of equal size in HadamardProduct.");
+    }
+  }
 
 void FillRandomly(std::vector<float> &vector, float lowerBound,
                   float upperBound) {

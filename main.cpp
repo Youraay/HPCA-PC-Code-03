@@ -33,8 +33,6 @@ int main(int argc, char* argv[])
   // activation: given as string, possible values: "None", "TanH", "LeakyReLU", "Softmax"
   std::vector<size_t> topology = {784, 800, 10};
   std::vector<std::string> activations = {"None", "LeakyReLU", "Softmax"};
-//   std::vector<size_t> topology = {784, 10};
-//   std::vector<std::string> activations = {"None", "Softmax"};
 
   MLPHandler mlp(topology,             // topology
                  activations,         // activation order
@@ -45,6 +43,20 @@ int main(int argc, char* argv[])
 
   mlp.ReadMNISTFiles(filePath);
   mlp.StartTraining();
+
+//   std::vector<size_t> topology2 = {784, 10};
+//   std::vector<std::string> activations2 = {"None", "Softmax"};
+//   MLPHandler mlp2(topology2, activations2, 60000, 1000, 10, 10);
+//   mlp2.ReadMNISTFiles(filePath);
+//   mlp2.StartTraining();
+
+  /* std::vector<size_t> topology3 = {784, 800, 10};
+  std::vector<std::string> activations3 = {"None", "TanH", "Softmax"}; */
+  
+  /* MLPHandler mlp3(topology3, activations3, 60000, 1000, 10, 10);
+
+  mlp3.ReadMNISTFiles(filePath);
+  mlp3.StartTraining(); */
 
   return 0;
 }

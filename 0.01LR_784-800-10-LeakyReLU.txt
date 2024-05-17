@@ -1,0 +1,26 @@
+--------------------------------------------------
+[INFO] Epoch 1
+[INFO] Training finished in 677 seconds.
+[INFO] Accuracy Training: 99.98%
+[INFO] Loss Training: 0.00
+[INFO] Testing finished in 5 seconds.
+[INFO] Accuracy Testing: 100.00%
+[INFO] Loss Testing: 0.00
+
+--------------------------------------------------
+[INFO] Epoch 2
+[INFO] Training finished in 691 seconds.
+[INFO] Accuracy Training: 100.00%
+[INFO] Loss Training: 0.00
+[INFO] Testing finished in 5 seconds.
+[INFO] Accuracy Testing: 100.00%
+[INFO] Loss Testing: 0.00
+
+--------------------------------------------------
+[INFO] Epoch 3
+[INFO] Training finished in 684 seconds.
+[INFO] Accuracy Training: 100.00%
+[INFO] Loss Training: 0.00
+[INFO] Testing finished in 5 seconds.
+[INFO] Accuracy Testing: 100.00%
+[INFO] Loss Testing: 0.00

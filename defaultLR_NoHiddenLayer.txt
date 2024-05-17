@@ -1,0 +1,89 @@
+--------------------------------------------------
+[INFO] Epoch 1
+[INFO] Training finished in 7 seconds.
+[INFO] Accuracy Training: 99.50%
+[INFO] Loss Training: 0.72
+[INFO] Testing finished in 0 seconds.
+[INFO] Accuracy Testing: 100.00%
+[INFO] Loss Testing: 0.19
+
+--------------------------------------------------
+[INFO] Epoch 2
+[INFO] Training finished in 7 seconds.
+[INFO] Accuracy Training: 100.00%
+[INFO] Loss Training: 0.12
+[INFO] Testing finished in 0 seconds.
+[INFO] Accuracy Testing: 100.00%
+[INFO] Loss Testing: 0.08
+
+--------------------------------------------------
+[INFO] Epoch 3
+[INFO] Training finished in 7 seconds.
+[INFO] Accuracy Training: 100.00%
+[INFO] Loss Training: 0.07
+[INFO] Testing finished in 0 seconds.
+[INFO] Accuracy Testing: 100.00%
+[INFO] Loss Testing: 0.05
+
+--------------------------------------------------
+[INFO] Epoch 4
+[INFO] Training finished in 7 seconds.
+[INFO] Accuracy Training: 100.00%
+[INFO] Loss Training: 0.05
+[INFO] Testing finished in 0 seconds.
+[INFO] Accuracy Testing: 100.00%
+[INFO] Loss Testing: 0.04
+
+--------------------------------------------------
+[INFO] Epoch 5
+[INFO] Training finished in 7 seconds.
+[INFO] Accuracy Training: 100.00%
+[INFO] Loss Training: 0.03
+[INFO] Testing finished in 0 seconds.
+[INFO] Accuracy Testing: 100.00%
+[INFO] Loss Testing: 0.03
+
+--------------------------------------------------
+[INFO] Epoch 6
+[INFO] Training finished in 7 seconds.
+[INFO] Accuracy Training: 100.00%
+[INFO] Loss Training: 0.03
+[INFO] Testing finished in 0 seconds.
+[INFO] Accuracy Testing: 100.00%
+[INFO] Loss Testing: 0.03
+
+--------------------------------------------------
+[INFO] Epoch 7
+[INFO] Training finished in 7 seconds.
+[INFO] Accuracy Training: 100.00%
+[INFO] Loss Training: 0.02
+[INFO] Testing finished in 0 seconds.
+[INFO] Accuracy Testing: 100.00%
+[INFO] Loss Testing: 0.02
+
+--------------------------------------------------
+[INFO] Epoch 8
+[INFO] Training finished in 7 seconds.
+[INFO] Accuracy Training: 100.00%
+[INFO] Loss Training: 0.02
+[INFO] Testing finished in 0 seconds.
+[INFO] Accuracy Testing: 100.00%
+[INFO] Loss Testing: 0.02
+
+--------------------------------------------------
+[INFO] Epoch 9
+[INFO] Training finished in 7 seconds.
+[INFO] Accuracy Training: 100.00%
+[INFO] Loss Training: 0.02
+[INFO] Testing finished in 0 seconds.
+[INFO] Accuracy Testing: 100.00%
+[INFO] Loss Testing: 0.02
+
+--------------------------------------------------
+[INFO] Epoch 10
+[INFO] Training finished in 7 seconds.
+[INFO] Accuracy Training: 100.00%
+[INFO] Loss Training: 0.02
+[INFO] Testing finished in 0 seconds.
+[INFO] Accuracy Testing: 100.00%
+[INFO] Loss Testing: 0.02

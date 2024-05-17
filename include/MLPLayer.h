@@ -124,7 +124,12 @@ public:
    */
   void ActivateTanH()
   {
-    // TODO 2.5
+    for (size_t i = 0; i < layerSize_; i++) {
+      // apply tanh to each neuron output
+      features_[i] = tanh(features_[i]);
+      // calculate the derivative of tanh
+      derivatives_[i] = 1.0f - (features_[i] * features_[i]);
+    }
   }
 
 

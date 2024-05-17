@@ -15,6 +15,7 @@ Emails: lakos@fias.uni-frankfurt.de; mithran@fias.uni-frankfurt.de
 
 int main(int argc, char* argv[])
 {
+  Utils::CompareRuntimes();
   std::string filePath;
 
   if (argc > 1) {

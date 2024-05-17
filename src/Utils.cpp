@@ -11,7 +11,7 @@ Emails: lakos@fias.uni-frankfurt.de; mithran@fias.uni-frankfurt.de
 #include <stdexcept>
 #include <algorithm>
 #include <random>
-
+#include <chrono>
 
 
 namespace Utils {
@@ -22,7 +22,7 @@ void MatVecMul(const std::vector<std::vector<float>> &matrix,
       result.size() == matrix.size()) {
 
     for (long i = 0; i < matrix.size(); i++) { // Itterate thougt every Row of the Matrix
-      for (long j = 0; i < matrix[i].size(); i++) { // Itterate thougt every Column of the Matrix
+      for (long j = 0; j < matrix[i].size(); j++) { // Itterate thougt every Column of the Matrix
         result[i] += vector[j] * matrix[i][j];
       }
     }
@@ -31,32 +31,42 @@ void MatVecMul(const std::vector<std::vector<float>> &matrix,
   }
 }
 
-  void MatTransposeVecMul(const std::vector<std::vector<float>>& matrix, const std::vector<float>& vector,
-                          std::vector<float>& result)
-  {
-    if (matrix.size() > 0 && vector.size() > 0) {
-      for (size_t i = 0; i < matrix.size(); ++i) {
-        for (size_t j = 0; j < matrix[i].size(); ++j) {
-          result[i] += vector[i] * matrix[j][i]; // technically .at() would be better if different dimension -> else undefined behavior
-        }
+void MatTransposeVecMul(const std::vector<std::vector<float>>& matrix, const std::vector<float>& vector,
+                        std::vector<float>& result)
+{
+  if (matrix.size() > 0 && vector.size() > 0) {
+    for (size_t i = 0; i < matrix[0].size(); ++i) {
+      for (size_t j = 0; j < matrix.size(); ++j) {
+        result[i] += vector[j] * matrix[j][i];
       }
-    } else {
-      throw std::runtime_error("Matrix or Vector is empty in MatTransposeVecMul()."); // or just return matrix
     }
+  } else {
+    throw std::runtime_error("Matrix or Vector is empty in MatTransposeVecMul()."); // or just return matrix
+  }
+}
+
+void Transpose(const std::vector<std::vector<float>>& matrix, std::vector<std::vector<float>>& result)
+{
+  // Get the dimensions of the original matrix
+  size_t rows = matrix.size();
+  size_t cols = matrix[0].size();
+
+  // Resize the result matrix to match the transposed dimensions
+  result.resize(cols);
+  for (size_t i = 0; i < cols; ++i) {
+    result[i].resize(rows);
   }
 
-  void Transpose(const std::vector<std::vector<float>>& matrix, std::vector<std::vector<float>>& result)
-  {
-    if (matrix.size() > 0) {
-      for (size_t i = 0; i < matrix.size(); ++i) {
-        for (size_t j = 0; j < matrix[i].size(); ++j) {
-          result[i][j] = matrix[j][i]; // technically .at() would be better if both matrices have different dimension -> else undefined behavior
-        }
+  if (matrix.size() > 0) {
+    for (size_t i = 0; i < rows; ++i) {
+      for (size_t j = 0; j < matrix[i].size(); ++j) {
+        result[j][i] = matrix[i][j]; 
       }
-    } else {
-      throw std::runtime_error("Matrix is empty in Transpose()."); // or just return matrix
     }
+  } else {
+    throw std::runtime_error("Matrix is empty in Transpose()."); // or just return matrix
   }
+}
 
 void VecAdd(std::vector<float> &vectorA, std::vector<float> &vectorB,
             std::vector<float> &result) {
@@ -112,16 +122,16 @@ void OuterProductAdd(const std::vector<float> &a, const std::vector<float> &b,
   }
 }
 
-  void HadamardProduct(const std::vector<float>& vectorA, const std::vector<float>& vectorB, std::vector<float>& result)
-  {
-    if (vectorA.size() == vectorB.size()) {
-      for (size_t i; i < vectorA.size(); ++i) { // vectorB has the same size per definition.
-        result[i] = vectorA[i] * vectorB[i];
-      }
-    } else {
-      throw std::runtime_error("Both vectors need to be of equal size in HadamardProduct.");
+void HadamardProduct(const std::vector<float>& vectorA, const std::vector<float>& vectorB, std::vector<float>& result)
+{
+  if (vectorA.size() == vectorB.size()) {
+    for (size_t i; i < vectorA.size(); ++i) { // vectorB has the same size per definition.
+      result[i] = vectorA[i] * vectorB[i];
     }
+  } else {
+    throw std::runtime_error("Both vectors need to be of equal size in HadamardProduct.");
   }
+}
 
 void FillRandomly(std::vector<float> &vector, float lowerBound,
                   float upperBound) {
@@ -159,57 +169,45 @@ void FillRandomlyPyTorch(std::vector<std::vector<float>> &matrix,
 }
 
 void Shuffle(std::vector<std::vector<float>>& inputFeatures, std::vector<size_t>& labels)
-  {
-    // Check if the sizes of inputFeatures and labels are the same
-    if(inputFeatures.size() != labels.size()){
-        throw std::invalid_argument("The sizes of inputFeatures and labels must be the same.");
-    }
-
-    /*
-    Create a random device, which generates a true random number.
-    Side Note: 
-    random_device creates a true random number, as it is a uniformly-distributed number generator.
-    This makes it non-deterministic i.e. it doesn't follow a pattern.
-    */
-    std::random_device rd;
-
-    // Seed the engine using rd, which will generate a sequence of pseudo-random numbers.
-    std::default_random_engine engine(rd());
-
-    // Create a vector of indices
-    std::vector<size_t> indices(inputFeatures.size());
-    // Fill indices vector with consecutive numbers, starting from 0.
-    std::iota(indices.begin(), indices.end(), 0);
-
-    // Shuffle the indices
-    std::shuffle(indices.begin(), indices.end(), engine);
-
-    // Create temporary vectors to hold the shuffled features and labels
-    std::vector<std::vector<float>> shuffledFeatures(inputFeatures.size());
-    std::vector<size_t> shuffledLabels(labels.size());
-
-    // Fill the temporary vectors with the shuffled data
-    for(size_t i = 0; i < indices.size(); ++i){
-        shuffledFeatures[i] = inputFeatures[indices[i]];
-        shuffledLabels[i] = labels[indices[i]];
-    }
-
-    // Swap the shuffled data with the original data
-    inputFeatures.swap(shuffledFeatures);
-    labels.swap(shuffledLabels);
+{
+  // Check if the sizes of inputFeatures and labels are the same
+  if(inputFeatures.size() != labels.size()){
+      throw std::invalid_argument("The sizes of inputFeatures and labels must be the same.");
   }
 
-  void Zeros(std::vector<float>& vector)
-  {
-    std::fill(vector.begin(), vector.end(), 0.f);
+  /*
+  Create a random device, which generates a true random number.
+  Side Note: 
+  random_device creates a true random number, as it is a uniformly-distributed number generator.
+  This makes it non-deterministic i.e. it doesn't follow a pattern.
+  */
+  std::random_device rd;
+
+  // Seed the engine using rd, which will generate a sequence of pseudo-random numbers.
+  std::default_random_engine engine(rd());
+
+  // Create a vector of indices
+  std::vector<size_t> indices(inputFeatures.size());
+  // Fill indices vector with consecutive numbers, starting from 0.
+  std::iota(indices.begin(), indices.end(), 0);
+
+  // Shuffle the indices
+  std::shuffle(indices.begin(), indices.end(), engine);
+
+  // Create temporary vectors to hold the shuffled features and labels
+  std::vector<std::vector<float>> shuffledFeatures(inputFeatures.size());
+  std::vector<size_t> shuffledLabels(labels.size());
+
+  // Fill the temporary vectors with the shuffled data
+  for(size_t i = 0; i < indices.size(); ++i){
+      shuffledFeatures[i] = inputFeatures[indices[i]];
+      shuffledLabels[i] = labels[indices[i]];
   }
 
-  void Zeros(std::vector<std::vector<float>>& matrix)
-  {
-    for (std::vector<float>& row: matrix) {
-      Zeros(row);
-    }
-  }
+  // Swap the shuffled data with the original data
+  inputFeatures.swap(shuffledFeatures);
+  labels.swap(shuffledLabels);
+}
 
 void Zeros(std::vector<float> &vector) {
   std::fill(vector.begin(), vector.end(), 0.f);
@@ -259,6 +257,47 @@ void Print(std::vector<float> &vector) {
   }
 
   std::cout << " }" << std::endl;
+}
+
+void CompareRuntimes() {
+  // Initialize your matrix, vector, and result here
+  const int rows = 100; // Set the desired number of rows
+  const int cols = 50; // Set the desired number of columns
+  std::vector<std::vector<float>> matrix;
+  matrix.resize(rows);
+  for (int i = 0; i < rows; ++i) {
+      matrix[i].resize(cols);
+      for (int j = 0; j < cols; ++j) {
+          matrix[i][j] = static_cast<float>(rand()) / RAND_MAX;
+      }
+  }
+
+  std::vector<std::vector<float>> transponedMatrix;
+
+  std::vector<float> vector(rows, 2.0);
+  std::vector<float> result1(rows, .0);
+  std::vector<float> result2(rows, .0);
+
+  // Start the clock before MatVecMul and Transpose
+  auto start1 = std::chrono::high_resolution_clock::now();
+  Transpose(matrix, transponedMatrix);
+  MatVecMul(transponedMatrix, vector, result1);
+  auto end1 = std::chrono::high_resolution_clock::now();
+
+  // Start the clock before MatTransposeVecMul
+  auto start2 = std::chrono::high_resolution_clock::now();
+  MatTransposeVecMul(matrix, vector, result2);
+  auto end2 = std::chrono::high_resolution_clock::now();
+
+  // Calculate and print the time differences
+  auto duration1 = std::chrono::duration_cast<std::chrono::microseconds>(end1 - start1).count();
+  auto duration2 = std::chrono::duration_cast<std::chrono::microseconds>(end2 - start2).count();
+
+  std::cout << "Time taken by MatVecMul and Transpose: " << duration1 << " microseconds" << std::endl;
+  std::cout << "Time taken by MatTransposeVecMul: " << duration2 << " microseconds" << std::endl;
+  //Print(result1);
+  //Print(result2);
+  if (result1==result2) std::cout << "Results are equal!\n";
 }
 
 } // namespace Utils

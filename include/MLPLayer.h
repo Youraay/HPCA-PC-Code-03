@@ -167,9 +167,10 @@ public:
   void CalculateHiddenDeltas(const std::vector<float>& nextLayerDeltas,
                              const std::vector<std::vector<float>>& weights)
   {
-    std::vector<std::vector<float>> weights_transpose;
-    Utils::Transpose(weights, weights_transpose);
-    Utils::MatVecMul(weights_transpose, nextLayerDeltas, deltas_);
+    //std::vector<std::vector<float>> weights_transpose;
+    //Utils::Transpose(weights, weights_transpose);
+    //Utils::MatVecMul(weights_transpose, nextLayerDeltas, deltas_);
+    Utils::MatTransposeVecMul(weights, nextLayerDeltas, deltas_);
     Utils::HadamardProduct(deltas_, derivatives_, deltas_);
   }
 

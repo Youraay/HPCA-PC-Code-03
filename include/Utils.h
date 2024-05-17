@@ -152,6 +152,11 @@ namespace Utils
    */
   void Print(std::vector<float>& vector);
 
+  /**
+   * Function to measure and compare runtimes of Transpose(...) + MatVecMul(...) vs MatTransposeVecMul(...)
+  */
+  void CompareRuntimes();
+
 }
 
 #endif //HPCA_PC_MLP_UTILS_H

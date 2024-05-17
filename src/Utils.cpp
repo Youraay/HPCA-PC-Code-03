@@ -175,12 +175,7 @@ void Shuffle(std::vector<std::vector<float>>& inputFeatures, std::vector<size_t>
       throw std::invalid_argument("The sizes of inputFeatures and labels must be the same.");
   }
 
-  /*
-  Create a random device, which generates a true random number.
-  Side Note: 
-  random_device creates a true random number, as it is a uniformly-distributed number generator.
-  This makes it non-deterministic i.e. it doesn't follow a pattern.
-  */
+  // Create a random device, which generates a true random number.
   std::random_device rd;
 
   // Seed the engine using rd, which will generate a sequence of pseudo-random numbers.
@@ -188,6 +183,7 @@ void Shuffle(std::vector<std::vector<float>>& inputFeatures, std::vector<size_t>
 
   // Create a vector of indices
   std::vector<size_t> indices(inputFeatures.size());
+
   // Fill indices vector with consecutive numbers, starting from 0.
   std::iota(indices.begin(), indices.end(), 0);
 
@@ -203,7 +199,6 @@ void Shuffle(std::vector<std::vector<float>>& inputFeatures, std::vector<size_t>
       shuffledFeatures[i] = inputFeatures[indices[i]];
       shuffledLabels[i] = labels[indices[i]];
   }
-
   // Swap the shuffled data with the original data
   inputFeatures.swap(shuffledFeatures);
   labels.swap(shuffledLabels);
